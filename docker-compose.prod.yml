@@ -1,0 +1,43 @@
+# version: "3"
+# services:
+#   client:
+#     container_name: client
+#     build: ./client
+#     restart: always
+
+#   messaging:
+#     container_name: messaging
+#     build: ./messaging
+#     restart: always
+
+#   file:
+#     container_name: file
+#     build: ./file
+#     restart: always
+
+#   system:
+#     container_name: system
+#     build: ./system
+#     restart: always
+
+#   nginx:
+#     container_name: nginx
+#     image: jonasal/nginx-certbot
+#     environment:
+#       - CERTBOT_EMAIL=jiechenmc@gmail.com
+#     ports:
+#       - 80:80
+#       - 443:443
+#     volumes:
+#       - nginx_secrets:/etc/letsencrypt
+#       - nginx_logs:/var/log/nginx
+#       - ./.nginx_conf/prod_conf.d:/etc/nginx/user_conf.d
+#     depends_on:
+#       - client
+#       - messaging
+
+# volumes:
+#   nginx_secrets:
+#   nginx_logs:
+
+
