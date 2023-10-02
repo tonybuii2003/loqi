@@ -1,0 +1,9 @@
+[submodule "session"]
+	path = session
+	url = git@github.com:viLoqi/session.git
+[submodule "deck"]
+	path = deck
+	url = git@github.com:viLoqi/deck.git
+[submodule "repository"]
+	path = repository
+	url = git@github.com:viLoqi/repository.git
