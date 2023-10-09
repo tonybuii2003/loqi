@@ -7,3 +7,6 @@
 [submodule "repository"]
 	path = repository
 	url = git@github.com:viLoqi/repository.git
+[submodule "cloud_functions"]
+	path = cloud_functions
+	url = git@github.com:viLoqi/cloud_functions.git
