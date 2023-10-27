@@ -1,68 +1,24 @@
-# version: "3"
-# services:
-#   client:
-#     container_name: client
-#     build:
-#       context: ./client
-#       dockerfile: ./Dockerfile.dev
-#     restart: always
-#     volumes:
-#       - ./client:/app
+version: '3'
 
-#   messaging:
-#     container_name: messaging
-#     build: ./messaging
-#     restart: always
-#     volumes:
-#       - ./messaging:/app
-#     ports:
-#       - 8080:8080
+services:
+  traefik:
+    image: traefik:v2.10
+    ports:
+      - 80:80
+      - 8080:8080
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ${PWD}/traefik.toml:/etc/traefik/traefik.toml
+    restart: always
+    depends_on:
+      - repository
 
-#   file:
-#     container_name: file
-#     build:
-#       context: ./file
-#       dockerfile: ./Dockerfile.dev
-#     restart: always
-#     volumes:
-#       - ./file/app:/code/app
-
-#   system:
-#     container_name: system
-#     build:
-#       context: ./system
-#       dockerfile: ./Dockerfile.dev
-#     restart: always
-#     volumes:
-#       - ./system/app:/code/app
-
-#   # db:
-#   #   container_name: postgres
-#   #   image: postgres
-#   #   restart: always
-#   #   environment:
-#   #     POSTGRES_PASSWORD: example
-
-#   # adminer:
-#   #   container_name: adminer
-#   #   image: adminer
-#   #   restart: always
-#   #   ports:
-#   #     - 8080:8080
-
-#   nginx:
-#     container_name: nginx
-#     image: nginx
-#     ports:
-#       - 80:80
-#     volumes:
-#       - ./.nginx_conf/dev_conf.d/:/etc/nginx/
-#     depends_on:
-#       - client
-#       - messaging
-#       - file
-#       - system
-#       # - db
-#       # - adminer
-
-
+  repository:
+    build:
+      context: ./repository
+      dockerfile: Dockerfile.dev
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.home.rule=PathPrefix(`/api/repository`)
+      - traefik.http.routers.home.entrypoints=web
+    restart: always
