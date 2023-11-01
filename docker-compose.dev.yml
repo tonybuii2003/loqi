@@ -12,6 +12,14 @@ services:
     restart: always
     depends_on:
       - repository
+      - mongo
+
+  mongo:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
 
   repository:
     build:
@@ -19,6 +27,6 @@ services:
       dockerfile: Dockerfile.dev
     labels:
       - traefik.enable=true
-      - traefik.http.routers.home.rule=PathPrefix(`/api/repository`)
-      - traefik.http.routers.home.entrypoints=web
+      - traefik.http.routers.repository.rule=PathPrefix(`/api/repository`)
+      - traefik.http.routers.repository.entrypoints=web
     restart: always
