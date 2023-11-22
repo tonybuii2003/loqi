@@ -11,18 +11,18 @@
   format = "common"
   #filePath = "/var/log/traefik.log"
 
-[accessLog]
-  filePath = "/var/log/access.log"
-  format = "json"
-
-  [accessLog.fields]
-    defaultMode = "keep"
-
-    [accessLog.fields.headers]
-      defaultMode = "drop"
-
-      [accessLog.fields.headers.names]
-        "Cf-connecting-ip" = "keep"
+#[accessLog]
+#  filePath = "/var/log/access.log"
+#  format = "json"
+#
+#  [accessLog.fields]
+#    defaultMode = "keep"
+#
+#    [accessLog.fields.headers]
+#      defaultMode = "drop"
+#
+#      [accessLog.fields.headers.names]
+#        "Cf-connecting-ip" = "keep"
   
 [api]
   dashboard = true

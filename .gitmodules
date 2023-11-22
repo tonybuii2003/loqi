@@ -10,3 +10,6 @@
 [submodule "cloud_functions"]
 	path = cloud_functions
 	url = git@github.com:viLoqi/cloud_functions.git
+[submodule "neo_client"]
+	path = neo_client
+	url = git@github.com:viLoqi/neo_client.git

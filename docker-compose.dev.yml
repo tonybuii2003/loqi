@@ -11,8 +11,10 @@ services:
       - ${PWD}/traefik.toml:/etc/traefik/traefik.toml
     restart: always
     depends_on:
-      - repository
       - mongo
+      - deck
+      - repository
+      - client
 
   mongo:
     image: mongo
@@ -30,3 +32,32 @@ services:
       - traefik.http.routers.repository.rule=PathPrefix(`/api/repository`)
       - traefik.http.routers.repository.entrypoints=web
     restart: always
+    depends_on:
+      - mongo
+
+  deck:
+    build:
+      context: ./deck
+      dockerfile: Dockerfile.dev
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.deck.rule=PathPrefix(`/api/deck`)
+      - traefik.http.routers.deck.entrypoints=web
+    restart: always
+    depends_on:
+      - mongo
+
+  client:
+    build:
+      context: ./neo_client
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./neo_client:/app
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.client.rule=Host(`localhost`)
+      - traefik.http.routers.client.entrypoints=web
+    restart: always
+    depends_on:
+      - repository
+      - deck
