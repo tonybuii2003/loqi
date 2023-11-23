@@ -27,6 +27,8 @@ services:
     build:
       context: ./repository
       dockerfile: Dockerfile.dev
+    volumes:
+      - ./repository/src:/app/src
     labels:
       - traefik.enable=true
       - traefik.http.routers.repository.rule=PathPrefix(`/api/repository`)
@@ -39,6 +41,8 @@ services:
     build:
       context: ./deck
       dockerfile: Dockerfile.dev
+    volumes:
+      - ./deck/src:/app/src
     labels:
       - traefik.enable=true
       - traefik.http.routers.deck.rule=PathPrefix(`/api/deck`)
