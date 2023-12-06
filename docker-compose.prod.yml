@@ -1,43 +1,61 @@
-# version: "3"
-# services:
-#   client:
-#     container_name: client
-#     build: ./client
-#     restart: always
+version: '3'
 
-#   messaging:
-#     container_name: messaging
-#     build: ./messaging
-#     restart: always
+services:
+  traefik:
+    image: traefik:v2.10
+    ports:
+      - 80:80
+      - 8080:8080
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ${PWD}/traefik.toml:/etc/traefik/traefik.toml
+    restart: always
+    depends_on:
+      - mongo
+      - deck
+      - repository
+      - client
 
-#   file:
-#     container_name: file
-#     build: ./file
-#     restart: always
+  mongo:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
 
-#   system:
-#     container_name: system
-#     build: ./system
-#     restart: always
+  repository:
+    build:
+      context: ./repository
+      dockerfile: Dockerfile
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.repository.rule=PathPrefix(`/api/repository`)
+      - traefik.http.routers.repository.entrypoints=web
+    restart: always
+    depends_on:
+      - mongo
 
-#   nginx:
-#     container_name: nginx
-#     image: jonasal/nginx-certbot
-#     environment:
-#       - CERTBOT_EMAIL=jiechenmc@gmail.com
-#     ports:
-#       - 80:80
-#       - 443:443
-#     volumes:
-#       - nginx_secrets:/etc/letsencrypt
-#       - nginx_logs:/var/log/nginx
-#       - ./.nginx_conf/prod_conf.d:/etc/nginx/user_conf.d
-#     depends_on:
-#       - client
-#       - messaging
+  deck:
+    build:
+      context: ./deck
+      dockerfile: Dockerfile
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.deck.rule=PathPrefix(`/api/deck`)
+      - traefik.http.routers.deck.entrypoints=web
+    restart: always
+    depends_on:
+      - mongo
 
-# volumes:
-#   nginx_secrets:
-#   nginx_logs:
-
-
+  client:
+    build:
+      context: ./neo_client
+      dockerfile: Dockerfile
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.client.rule=Host(`loqi.jiechen.dev`)
+      - traefik.http.routers.client.entrypoints=web
+    restart: always
+    depends_on:
+      - repository
+      - deck
