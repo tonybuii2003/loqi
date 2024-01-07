@@ -9,7 +9,7 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./traefik.toml:/etc/traefik/traefik.toml
-    restart: always
+    # restart: on-failure
     depends_on:
       - mongo
       - deck
@@ -18,7 +18,7 @@ services:
 
   mongo:
     image: mongo
-    restart: always
+    # restart: on-failure
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
@@ -33,7 +33,7 @@ services:
       - traefik.enable=true
       - traefik.http.routers.repository.rule=PathPrefix(`/api/repository`)
       - traefik.http.routers.repository.entrypoints=web
-    restart: always
+    # restart: on-failure
     depends_on:
       - mongo
 
@@ -47,7 +47,7 @@ services:
       - traefik.enable=true
       - traefik.http.routers.deck.rule=PathPrefix(`/api/deck`)
       - traefik.http.routers.deck.entrypoints=web
-    restart: always
+    # restart: on-failure
     depends_on:
       - mongo
 
@@ -61,7 +61,7 @@ services:
       - traefik.enable=true
       - traefik.http.routers.client.rule=Host(`localhost`)
       - traefik.http.routers.client.entrypoints=web
-    restart: always
+    # restart: on-failure
     depends_on:
       - repository
       - deck
