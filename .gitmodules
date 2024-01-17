@@ -13,3 +13,6 @@
 [submodule "neo_client"]
 	path = neo_client
 	url = git@github.com:viLoqi/neo_client.git
+[submodule "messaging"]
+	path = messaging
+	url = git@github.com:viLoqi/messaging.git
