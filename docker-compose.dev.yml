@@ -67,14 +67,14 @@ services:
 
   ai:
     build:
-      context: ./AI
+      context: ./ai
       dockerfile: Dockerfile.dev
     volumes:
-      - ./AI/src:/app/src
+      - ./ai/src:/app/src
     labels:
       - traefik.enable=true
-      - traefik.http.routers.AI.rule=PathPrefix(`/api/ai`)
-      - traefik.http.routers.AI.entrypoints=web
+      - traefik.http.routers.ai.rule=PathPrefix(`/api/ai`)
+      - traefik.http.routers.ai.entrypoints=web
     # restart: on-failure
     depends_on:
       - mongo
