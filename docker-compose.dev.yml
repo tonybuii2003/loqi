@@ -51,6 +51,34 @@ services:
     depends_on:
       - mongo
 
+  payment:
+    build:
+      context: ./payment
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./payment/src:/app/src
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.payment.rule=PathPrefix(`/api/payment`)
+      - traefik.http.routers.payment.entrypoints=web
+    # restart: on-failure
+    depends_on:
+      - mongo
+
+  ai:
+    build:
+      context: ./AI
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./AI/src:/app/src
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.AI.rule=PathPrefix(`/api/ai`)
+      - traefik.http.routers.AI.entrypoints=web
+    # restart: on-failure
+    depends_on:
+      - mongo
+
   client:
     build:
       context: ./neo_client
