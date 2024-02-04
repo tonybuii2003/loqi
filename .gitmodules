@@ -16,3 +16,9 @@
 [submodule "messaging"]
 	path = messaging
 	url = git@github.com:viLoqi/messaging.git
+[submodule "AI"]
+	path = AI
+	url = git@github.com:viLoqi/AI.git
+[submodule "payment"]
+	path = payment
+	url = git@github.com:viLoqi/payment.git
