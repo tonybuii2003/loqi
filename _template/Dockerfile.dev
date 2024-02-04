@@ -1,0 +1,16 @@
+# Development Docker File
+# You can reference the followings: 
+# https://github.com/viLoqi/client/blob/main/Dockerfile.dev
+# https://nodejs.org/en/docs/guides/nodejs-docker-webapp
+
+FROM node:20-alpine
+
+WORKDIR /app
+
+COPY package.json .
+
+RUN yarn
+
+COPY ./src /app/src
+
+CMD [ "yarn", "start" ]
