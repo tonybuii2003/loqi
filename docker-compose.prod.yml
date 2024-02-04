@@ -29,7 +29,7 @@ services:
       dockerfile: Dockerfile
     labels:
       - traefik.enable=true
-      - traefik.http.routers.repository.rule=PathPrefix(`/api/repository`)
+      - traefik.http.routers.repository.rule=Host(`loqi.jiechen.dev`) && PathPrefix(`/api/repository`)
       - traefik.http.routers.repository.entrypoints=web
     restart: always
     depends_on:
@@ -41,7 +41,7 @@ services:
       dockerfile: Dockerfile
     labels:
       - traefik.enable=true
-      - traefik.http.routers.deck.rule=PathPrefix(`/api/deck`)
+      - traefik.http.routers.deck.rule=Host(`loqi.jiechen.dev`) && PathPrefix(`/api/deck`)
       - traefik.http.routers.deck.entrypoints=web
     restart: always
     depends_on:
@@ -65,7 +65,5 @@ services:
     build: ./messaging
     labels:
       - traefik.enable=true
-      - traefik.http.routers.messaging.rule=PathPrefix(`/api/messaging`)
+      - traefik.http.routers.messaging.rule=Host(`loqi.jiechen.dev`) && PathPrefix(`/api/messaging`)
       - traefik.http.routers.messaging.entrypoints=web
-    volumes:
-      - ./messaging:/app
