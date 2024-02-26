@@ -24,7 +24,7 @@ func main() {
 	}
 
 	// Authenticate
-	client.SetToken("dev-only-token")
+	client.SetToken("myroot")
 
 	secretData := map[string]interface{}{
 		"status": "success",
