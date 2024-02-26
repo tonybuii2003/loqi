@@ -16,7 +16,7 @@ import (
 func main() {
 	config := vault.DefaultConfig()
 
-	config.Address = "http://127.0.0.1:8200"
+	config.Address = "http://52.151.255.24:8200/"
 
 	client, err := vault.NewClient(config)
 	if err != nil {
@@ -27,7 +27,7 @@ func main() {
 	client.SetToken("myroot")
 
 	secretData := map[string]interface{}{
-		"status": "success",
+		"secret": "loqi",
 	}
 
 	// Write a secret
@@ -50,7 +50,7 @@ func main() {
 		log.Fatalf("value type assertion failed: %T %#v", secret.Data["status"], secret.Data["status"])
 	}
 
-	if value != "success" {
+	if value != "loqi" {
 		log.Fatalf("unexpected password value %q retrieved from vault", value)
 	}
 
