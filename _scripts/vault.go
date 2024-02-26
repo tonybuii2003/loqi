@@ -44,10 +44,10 @@ func main() {
 		log.Fatalf("unable to read secret: %v", err)
 	}
 
-	value, ok := secret.Data["status"].(string)
+	value, ok := secret.Data["secret"].(string)
 
 	if !ok {
-		log.Fatalf("value type assertion failed: %T %#v", secret.Data["status"], secret.Data["status"])
+		log.Fatalf("value type assertion failed: %T %#v", secret.Data["secret"], secret.Data["secret"])
 	}
 
 	if value != "loqi" {
