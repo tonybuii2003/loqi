@@ -22,6 +22,8 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
+    volumes:
+      - mongodata:/data/db
 
   repository:
     build:
@@ -67,3 +69,6 @@ services:
       - traefik.enable=true
       - traefik.http.routers.messaging.rule=Host(`loqi.jiechen.dev`) && PathPrefix(`/api/messaging`)
       - traefik.http.routers.messaging.entrypoints=web
+
+volumes:
+  mongodata:

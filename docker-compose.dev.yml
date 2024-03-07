@@ -22,6 +22,8 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
+    volumes:
+      - mongodata:/data/db
 
   repository:
     build:
@@ -103,3 +105,6 @@ services:
       - traefik.http.routers.messaging.entrypoints=web
     volumes:
       - ./messaging:/app
+
+volumes:
+  mongodata:
