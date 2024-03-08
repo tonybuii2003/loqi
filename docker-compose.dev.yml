@@ -67,6 +67,15 @@ services:
     depends_on:
       - mongo
 
+  stripe-cli:
+    image: stripe/stripe-cli
+    command: listen --forward-to localhost/api/payment/webhook -e invoice.paid,invoice.payment_failed --api-key sk_test_51Og0zkHuYFk3KBjSVTGTFOPtzRZCJf7HwbfBSIfVUGWe3lrV4aSEi22GjIRaYIdzJW4wl7m6wS0nMsZyTOEJtE5000JK57p8yh
+    stdin_open: true
+    tty: true
+    depends_on:
+      - payment
+    network_mode: "host"
+
   ai:
     build:
       context: ./ai
