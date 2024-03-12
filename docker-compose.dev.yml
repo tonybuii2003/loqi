@@ -77,6 +77,8 @@ services:
       - traefik.enable=true
       - traefik.http.routers.ai.rule=PathPrefix(`/api/ai`)
       - traefik.http.routers.ai.entrypoints=web
+      - traefik.http.middlewares.ai-ratelimit.ratelimit.average=100
+      - traefik.http.routers.ai.middlewares=ai-ratelimit
     # restart: on-failure
     depends_on:
       - mongo
@@ -103,6 +105,8 @@ services:
       - traefik.enable=true
       - traefik.http.routers.messaging.rule=PathPrefix(`/api/messaging`)
       - traefik.http.routers.messaging.entrypoints=web
+      - traefik.http.middlewares.messaging-ratelimit.ratelimit.average=100
+      - traefik.http.routers.messaging.middlewares=messaging-ratelimit
     volumes:
       - ./messaging:/app
 
