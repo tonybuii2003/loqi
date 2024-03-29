@@ -22,3 +22,6 @@
 [submodule "ai"]
 	path = ai
 	url = git@github.com:viLoqi/ai.git
+[submodule "activity"]
+	path = activity
+	url = git@github.com:viLoqi/activity.git
