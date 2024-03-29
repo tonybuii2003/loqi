@@ -119,5 +119,19 @@ services:
     volumes:
       - ./messaging:/app
 
+  activity:
+    build:
+      context: ./activity
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./activity/src:/app/src
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.activity.rule=PathPrefix(`/api/activity`)
+      - traefik.http.routers.activity.entrypoints=web
+    # restart: on-failure
+    depends_on:
+      - mongo
+
 volumes:
   mongodata:

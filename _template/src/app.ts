@@ -12,5 +12,5 @@ app.use('/api/payment', indexRouter)
 const PORT = 3000
 
 app.listen(PORT, '0.0.0.0', () => {
-  console.log('Payment API Engaged')
+  console.log('<T> API Engaged')
 })
