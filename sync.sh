@@ -6,3 +6,4 @@ fi
 git pull
 git submodule foreach git switch main
 git submodule foreach git pull
+# git submodule foreach yarn

@@ -30,7 +30,7 @@ services:
       context: ./repository
       dockerfile: Dockerfile.dev
     volumes:
-      - ./repository/src:/app/src
+      - ./repository:/app
     labels:
       - traefik.enable=true
       - traefik.http.routers.repository.rule=PathPrefix(`/api/repository`)
@@ -44,7 +44,7 @@ services:
       context: ./deck
       dockerfile: Dockerfile.dev
     volumes:
-      - ./deck/src:/app/src
+      - ./deck:/app
     labels:
       - traefik.enable=true
       - traefik.http.routers.deck.rule=PathPrefix(`/api/deck`)
@@ -58,7 +58,7 @@ services:
       context: ./payment
       dockerfile: Dockerfile.dev
     volumes:
-      - ./payment/src:/app/src
+      - ./payment:/app
     labels:
       - traefik.enable=true
       - traefik.http.routers.payment.rule=PathPrefix(`/api/payment`)
@@ -81,7 +81,7 @@ services:
       context: ./ai
       dockerfile: Dockerfile.dev
     volumes:
-      - ./ai/src:/app/src
+      - ./ai:/app
     labels:
       - traefik.enable=true
       - traefik.http.routers.ai.rule=PathPrefix(`/api/ai`)
@@ -124,7 +124,7 @@ services:
       context: ./activity
       dockerfile: Dockerfile.dev
     volumes:
-      - ./activity/src:/app/src
+      - ./activity:/app
     labels:
       - traefik.enable=true
       - traefik.http.routers.activity.rule=PathPrefix(`/api/activity`)
