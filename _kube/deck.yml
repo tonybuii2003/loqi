@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deck-deployment
+  labels:
+    app: deck
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: deck
+  template:
+    metadata:
+      labels:
+        app: deck
+    spec:
+      containers:
+        - name: deck
+          image: 2578547813/loqi-deck
+          ports:
+            - containerPort: 3000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: deck
+spec:
+  type: LoadBalancer
+  selector:
+    app: deck
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 3000
+      nodePort: 30100
