@@ -22,6 +22,14 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
+    # deploy:
+    #   resources:
+    #     limits:
+    #       cpus: '3'
+    #       memory: 16384M
+    #     reservations:
+    #       cpus: '3'
+    #       memory: 8192M
     volumes:
       - mongodata:/data/db
 
@@ -49,7 +57,14 @@ services:
       - traefik.enable=true
       - traefik.http.routers.deck.rule=PathPrefix(`/api/deck`)
       - traefik.http.routers.deck.entrypoints=web
-    # restart: on-failure
+    # deploy:
+    #   resources:
+    #     limits:
+    #       cpus: '3'
+    #       memory: 16384M
+    #     reservations:
+    #       cpus: '3'
+    #       memory: 8192M
     depends_on:
       - mongo
 
