@@ -17,6 +17,13 @@ spec:
       containers:
         - name: deck
           image: 2578547813/loqi-deck
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "2000m"
+            limits:
+              memory: "1024Mi"
+              cpu: "3000m"
           ports:
             - containerPort: 3000
 ---
