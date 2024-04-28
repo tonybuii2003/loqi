@@ -57,8 +57,6 @@ services:
       - traefik.enable=true
       - traefik.http.routers.deck.rule=Host(`loqi.jiechen.dev`) && PathPrefix(`/api/deck`)
       - traefik.http.routers.deck.entrypoints=web
-      - "traefik.http.middlewares.localauth.basicauth.users=user:$$2y$$05$$VXLqtj2PQzOPbPlxpuD8lOnHEtJGSr6Gn1aMflWiUbBvlSAf2dSsC"
-      - traefik.http.routers.deck.middlewares=localauth
     restart: always
     # depends_on:
     #   - mongo
