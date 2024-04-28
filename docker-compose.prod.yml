@@ -25,6 +25,17 @@ services:
     volumes:
       - mongodata:/data/db
 
+  messaging:
+    build: ./messaging
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.messaging.rule=Host(`loqi.jiechen.dev`) && PathPrefix(`/api/messaging`)
+      - traefik.http.routers.messaging.entrypoints=web
+      - traefik.http.middlewares.messaging-ratelimit.ratelimit.average=100
+      - traefik.http.middlewares.private-api-allowlist.ipallowlist.sourcerange=172.18.0.1/16
+      - traefik.http.routers.messaging.middlewares=messaging-ratelimit, private-api-allowlist
+    restart: always
+
   repository:
     build:
       context: ./repository
@@ -64,16 +75,7 @@ services:
     #   - repository
     #   - deck
 
-  messaging:
-    build: ./messaging
-    labels:
-      - traefik.enable=true
-      - traefik.http.routers.messaging.rule=Host(`loqi.jiechen.dev`) && PathPrefix(`/api/messaging`)
-      - traefik.http.routers.messaging.entrypoints=web
-      - traefik.http.middlewares.messaging-ratelimit.ratelimit.average=100
-      - traefik.http.middlewares.private-api-allowlist.ipallowlist.sourcerange=172.18.0.1/16
-      - traefik.http.routers.messaging.middlewares=messaging-ratelimit, private-api-allowlist
-    restart: always
+
 
 volumes:
   mongodata:
