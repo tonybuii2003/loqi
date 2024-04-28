@@ -44,7 +44,6 @@ services:
       - traefik.enable=true
       - traefik.http.routers.repository.rule=Host(`loqi.jiechen.dev`) && PathPrefix(`/api/repository`)
       - traefik.http.routers.repository.entrypoints=web
-      - traefik.http.middlewares.private-api-allowlist.ipallowlist.sourcerange=172.18.0.1/16
       - traefik.http.routers.repository.middlewares=private-api-allowlist
     restart: always
     # depends_on:
@@ -58,7 +57,6 @@ services:
       - traefik.enable=true
       - traefik.http.routers.deck.rule=Host(`loqi.jiechen.dev`) && PathPrefix(`/api/deck`)
       - traefik.http.routers.deck.entrypoints=web
-      - traefik.http.middlewares.private-api-allowlist.ipallowlist.sourcerange=172.18.0.1/16
       - traefik.http.routers.deck.middlewares=private-api-allowlist
     restart: always
     # depends_on:
