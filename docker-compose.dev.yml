@@ -29,6 +29,20 @@ services:
     volumes:
       - mongodata:/data/db
 
+    messaging:
+      build: ./messaging
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.messaging.rule=PathPrefix(`/api/messaging`)
+        - traefik.http.routers.messaging.entrypoints=web
+        - traefik.http.middlewares.messaging-ratelimit.ratelimit.average=100
+        # - traefik.http.middlewares.private-api-allowlist.ipallowlist.sourcerange=172.0.0.0/8
+        - traefik.http.routers.messaging.middlewares=messaging-ratelimit
+      volumes:
+        - ./messaging:/app
+      depends_on:
+        - traefik
+        
   repository:
     build:
       context: ./repository
@@ -39,7 +53,7 @@ services:
       - traefik.enable=true
       - traefik.http.routers.repository.rule=PathPrefix(`/api/repository`)
       - traefik.http.routers.repository.entrypoints=web
-      - traefik.http.routers.repository.middlewares=private-api-allowlist
+      # - traefik.http.routers.repository.middlewares=private-api-allowlist
     # restart: on-failure
     depends_on:
       - mongo
@@ -54,7 +68,7 @@ services:
       - traefik.enable=true
       - traefik.http.routers.deck.rule=PathPrefix(`/api/deck`)
       - traefik.http.routers.deck.entrypoints=web
-      - traefik.http.routers.deck.middlewares=private-api-allowlist
+      # - traefik.http.routers.deck.middlewares=private-api-allowlist
     # deploy:
     #   resources:
     #     limits:
@@ -76,7 +90,7 @@ services:
       - traefik.enable=true
       - traefik.http.routers.payment.rule=PathPrefix(`/api/payment`)
       - traefik.http.routers.payment.entrypoints=web
-      - traefik.http.routers.payment.middlewares=private-api-allowlist
+      # - traefik.http.routers.payment.middlewares=private-api-allowlist
     # restart: on-failure
     depends_on:
       - mongo
@@ -102,7 +116,7 @@ services:
       - traefik.http.routers.ai.entrypoints=web
       - traefik.http.middlewares.ai-ratelimit.ratelimit.average=100
       - traefik.http.routers.ai.middlewares=ai-ratelimit
-      - traefik.http.routers.ai.middlewares=private-api-allowlist
+      # - traefik.http.routers.ai.middlewares=private-api-allowlist
     # restart: on-failure
     depends_on:
       - mongo
@@ -122,20 +136,6 @@ services:
       - repository
       - deck
 
-  messaging:
-    build: ./messaging
-    labels:
-      - traefik.enable=true
-      - traefik.http.routers.messaging.rule=PathPrefix(`/api/messaging`)
-      - traefik.http.routers.messaging.entrypoints=web
-      - traefik.http.middlewares.messaging-ratelimit.ratelimit.average=100
-      - traefik.http.middlewares.private-api-allowlist.ipallowlist.sourcerange=172.18.0.1/16
-      - traefik.http.routers.messaging.middlewares=messaging-ratelimit, private-api-allowlist
-    volumes:
-      - ./messaging:/app
-    depends_on:
-      - traefik
-
   activity:
     build:
       context: ./activity
@@ -146,7 +146,7 @@ services:
       - traefik.enable=true
       - traefik.http.routers.activity.rule=PathPrefix(`/api/activity`)
       - traefik.http.routers.activity.entrypoints=web
-      - traefik.http.routers.activity.middlewares=private-api-allowlist
+      # - traefik.http.routers.activity.middlewares=private-api-allowlist
     # restart: on-failure
     depends_on:
       - mongo
