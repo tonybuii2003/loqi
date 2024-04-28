@@ -11,8 +11,8 @@
   format = "common"
   #filePath = "/var/log/traefik.log"
 
-#[accessLog]
-#  filePath = "/var/log/access.log"
+[accessLog]
+  filePath = "/var/log/access.log"
 #  format = "json"
 #
 #  [accessLog.fields]
