@@ -57,7 +57,6 @@ services:
       - traefik.enable=true
       - traefik.http.routers.deck.rule=Host(`loqi.jiechen.dev`) && PathPrefix(`/api/deck`)
       - traefik.http.routers.deck.entrypoints=web
-      # - traefik.http.routers.deck.middlewares=private-api-allowlist
     restart: always
     # depends_on:
     #   - mongo
