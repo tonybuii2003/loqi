@@ -31,3 +31,7 @@
 [providers.docker]
   exposedByDefault = false
 
+[experimental.plugins]
+[experimental.plugins.realip]
+modulename = "github.com/BetterCorp/cloudflarewarp"
+version = "v1.3.0"
