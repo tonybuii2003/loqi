@@ -5,6 +5,8 @@
 [entryPoints]
   [entryPoints.web]
     address = ":80"
+    [entryPoints.web.forwardedHeaders]
+      insecure = true
 
 [log]
   level = "INFO"
