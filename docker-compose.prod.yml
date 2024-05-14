@@ -107,6 +107,11 @@ services:
     depends_on:
       - payment
     network_mode: "host"
-
+    
+  whoami:
+    image: traefik/whoami
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.whoami.rule=Host(`loqi.jiechen.dev`) && PathPrefix(`/whoami`)
 volumes:
   mongodata:
