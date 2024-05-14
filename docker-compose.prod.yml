@@ -32,9 +32,8 @@ services:
       - traefik.http.routers.messaging.rule=Host(`loqi.jiechen.dev`) && PathPrefix(`/api/messaging`)
       - traefik.http.routers.messaging.entrypoints=web
       - traefik.http.middlewares.messaging-ratelimit.ratelimit.average=100
-      - traefik.http.middlewares.private-api-allowlist.ipallowlist.sourcerange=69.120.128.55
-      - traefik.http.middlewares.private-api-allowlist.ipallowlist.ipstrategy.depth=1
-      - traefik.http.routers.messaging.middlewares=messaging-ratelimit, private-api-allowlist
+      - traefik.http.middlewares.messaging-ratelimit.ratelimit.sourcecriterion.ipstrategy.depth=1
+      - traefik.http.routers.messaging.middlewares=messaging-ratelimit
     restart: always
 
   repository:
@@ -53,7 +52,6 @@ services:
   deck:
     build:
       context: ./deck
-      dockerfile: Dockerfile
     labels:
       - traefik.enable=true
       - traefik.http.routers.deck.rule=Host(`loqi.jiechen.dev`) && PathPrefix(`/api/deck`)
@@ -66,7 +64,6 @@ services:
   client:
     build:
       context: ./neo_client
-      dockerfile: Dockerfile
     labels:
       - traefik.enable=true
       - traefik.http.routers.client.rule=Host(`loqi.jiechen.dev`)
@@ -76,6 +73,21 @@ services:
     #   - repository
     #   - deck
 
+  ai:
+    build:
+      context: ./ai
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.ai.rule=PathPrefix(`/api/ai`)
+      - traefik.http.routers.ai.entrypoints=web
+      - traefik.http.middlewares.ai-ratelimit.ratelimit.average=10
+      - traefik.http.middlewares.ai-ratelimit.ratelimit.sourcecriterion.ipstrategy.depth=1
+      - traefik.http.routers.messaging.middlewares=ai-ratelimit
+      - traefik.http.routers.ai.middlewares=ai-ratelimit
+      # - traefik.http.routers.ai.middlewares=private-api-allowlist
+    # restart: on-failure
+    depends_on:
+      - mongo  
 
 
 volumes:
