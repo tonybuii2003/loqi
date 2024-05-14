@@ -78,7 +78,7 @@ services:
       context: ./ai
     labels:
       - traefik.enable=true
-      - traefik.http.routers.ai.rule=PathPrefix(`/api/ai`)
+      - traefik.http.routers.ai.rule=Host(`loqi.jiechen.dev`) && PathPrefix(`/api/ai`)
       - traefik.http.routers.ai.entrypoints=web
       - traefik.http.middlewares.ai-ratelimit.ratelimit.average=10
       - traefik.http.middlewares.ai-ratelimit.ratelimit.sourcecriterion.ipstrategy.depth=1
@@ -89,6 +89,24 @@ services:
     depends_on:
       - mongo  
 
+  payment:
+    build:
+      context: ./payment
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.payment.rule=Host(`loqi.jiechen.dev`) && PathPrefix(`/api/payment`)
+      - traefik.http.routers.payment.entrypoints=web
+    depends_on:
+      - mongo
+      
+  stripe-cli:
+    image: stripe/stripe-cli
+    command: listen --forward-to localhost/api/payment/webhook -e invoice.paid,invoice.payment_failed --api-key sk_test_51Og0zkHuYFk3KBjSVTGTFOPtzRZCJf7HwbfBSIfVUGWe3lrV4aSEi22GjIRaYIdzJW4wl7m6wS0nMsZyTOEJtE5000JK57p8yh
+    stdin_open: true
+    tty: true
+    depends_on:
+      - payment
+    network_mode: "host"
 
 volumes:
   mongodata:
