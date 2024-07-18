@@ -9,9 +9,6 @@ schemes:
 produces:
   - application/json
 
-security:
-  - google_identity: []
-
 paths:
   /decks:
     get:
@@ -25,14 +22,3 @@ paths:
           description: A successful response
           schema:
             type: string
-
-securityDefinitions:
-  google_identity:
-    authorizationUrl: ""
-    flow: "implicit"
-    type: "oauth2"
-    # The value below should be unique
-    x-google-issuer: "https://accounts.google.com"
-    x-google-jwks_uri: "https://www.googleapis.com/oauth2/v3/certs"
-    # Optional. Replace YOUR-CLIENT-ID with your client ID
-    x-google-audiences: "32555940559.apps.googleusercontent.com"
