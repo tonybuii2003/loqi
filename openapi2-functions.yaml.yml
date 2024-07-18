@@ -1,0 +1,38 @@
+# openapi2-functions.yaml
+swagger: "2.0"
+info:
+  title: test test.apigateway.loqi-loqi.cloud.goog
+  description: Sample API on API Gateway with a Google Cloud Functions backend
+  version: 1.0.0
+schemes:
+  - https
+produces:
+  - application/json
+
+security:
+  - google_identity: []
+
+paths:
+  /decks:
+    get:
+      summary: Get Deck
+      operationId: hello
+      x-google-backend:
+        address: https://us-east1-loqi-loqi.cloudfunctions.net/deck
+        disable_auth: true
+      responses:
+        "200":
+          description: A successful response
+          schema:
+            type: string
+
+securityDefinitions:
+  google_identity:
+    authorizationUrl: ""
+    flow: "implicit"
+    type: "oauth2"
+    # The value below should be unique
+    x-google-issuer: "https://accounts.google.com"
+    x-google-jwks_uri: "https://www.googleapis.com/oauth2/v3/certs"
+    # Optional. Replace YOUR-CLIENT-ID with your client ID
+    x-google-audiences: "32555940559.apps.googleusercontent.com"
