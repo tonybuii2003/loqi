@@ -9,15 +9,19 @@ schemes:
 produces:
   - application/json
 
+host: test-1yd6a1oeh1xjb.apigateway.loqi-loqi.cloud.goog
+x-google-endpoints:
+  - name: test-1yd6a1oeh1xjb.apigateway.loqi-loqi.cloud.goog
+    allowCors: True
+
 paths:
   /decks:
     get:
       summary: Get Deck
-      operationId: hello
+      operationId: GETDeck
       x-google-backend:
         address: https://us-east1-loqi-loqi.cloudfunctions.net/deck
         disable_auth: true
-        allowCors: true
       responses:
         "200":
           description: A successful response
