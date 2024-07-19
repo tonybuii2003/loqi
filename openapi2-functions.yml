@@ -17,6 +17,7 @@ paths:
       x-google-backend:
         address: https://us-east1-loqi-loqi.cloudfunctions.net/deck
         disable_auth: true
+        allowCors: true
       responses:
         "200":
           description: A successful response
