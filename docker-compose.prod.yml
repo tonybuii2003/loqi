@@ -16,14 +16,14 @@ services:
       - repository
       - client
 
-  mongo:
-    image: mongo:7.0
-    restart: always
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: example
-    volumes:
-      - mongodata:/data/db
+  # mongo:
+  #   image: mongo:7.0
+  #   restart: always
+  #   environment:
+  #     MONGO_INITDB_ROOT_USERNAME: root
+  #     MONGO_INITDB_ROOT_PASSWORD: example
+  #   volumes:
+  #     - mongodata:/data/db
 
   messaging:
     build: ./messaging
@@ -36,29 +36,29 @@ services:
       - traefik.http.routers.messaging.middlewares=messaging-ratelimit
     restart: always
 
-  repository:
-    build:
-      context: ./repository
-      dockerfile: Dockerfile
-    labels:
-      - traefik.enable=true
-      - traefik.http.routers.repository.rule=Host(`loqi.jiechen.dev`) && PathPrefix(`/api/repository`)
-      - traefik.http.routers.repository.entrypoints=web
-    restart: always
+  # repository:
+  #   build:
+  #     context: ./repository
+  #     dockerfile: Dockerfile
+  #   labels:
+  #     - traefik.enable=true
+  #     - traefik.http.routers.repository.rule=Host(`loqi.jiechen.dev`) && PathPrefix(`/api/repository`)
+  #     - traefik.http.routers.repository.entrypoints=web
+  #   restart: always
     # depends_on:
     #   - mongo
 
-  deck:
-    build:
-      context: ./deck
-    labels:
-      - traefik.enable=true
-      - traefik.http.routers.deck.rule=Host(`loqi.jiechen.dev`) && PathPrefix(`/api/deck`)
-      - traefik.http.routers.deck.entrypoints=web
-      - traefik.http.middlewares.deck-ratelimit.ratelimit.average=100
-      - traefik.http.middlewares.deck-ratelimit.ratelimit.sourcecriterion.ipstrategy.depth=1
-      - traefik.http.routers.deck.middlewares=deck-ratelimit
-    restart: always
+  # deck:
+  #   build:
+  #     context: ./deck
+  #   labels:
+  #     - traefik.enable=true
+  #     - traefik.http.routers.deck.rule=Host(`loqi.jiechen.dev`) && PathPrefix(`/api/deck`)
+  #     - traefik.http.routers.deck.entrypoints=web
+  #     - traefik.http.middlewares.deck-ratelimit.ratelimit.average=100
+  #     - traefik.http.middlewares.deck-ratelimit.ratelimit.sourcecriterion.ipstrategy.depth=1
+  #     - traefik.http.routers.deck.middlewares=deck-ratelimit
+  #   restart: always
     # depends_on:
     #   - mongo
 
@@ -113,5 +113,5 @@ services:
     labels:
       - traefik.enable=true
       - traefik.http.routers.whoami.rule=Host(`loqi.jiechen.dev`) && PathPrefix(`/whoami`)
-volumes:
-  mongodata:
+# volumes:
+#   mongodata:
