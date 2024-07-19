@@ -11,9 +11,9 @@ services:
       - ./traefik.toml:/etc/traefik/traefik.toml
     restart: always
     depends_on:
-      - mongo
-      - deck
-      - repository
+      # - mongo
+      # - deck
+      # - repository
       - client
 
   # mongo:
