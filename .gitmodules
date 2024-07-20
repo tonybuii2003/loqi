@@ -1,27 +1,9 @@
-[submodule "session"]
-	path = session
-	url = git@github.com:viLoqi/session.git
-[submodule "deck"]
-	path = deck
-	url = git@github.com:viLoqi/deck.git
-[submodule "repository"]
-	path = repository
-	url = git@github.com:viLoqi/repository.git
 [submodule "cloud_functions"]
 	path = cloud_functions
 	url = git@github.com:viLoqi/cloud_functions.git
 [submodule "neo_client"]
 	path = neo_client
 	url = git@github.com:viLoqi/neo_client.git
-[submodule "messaging"]
-	path = messaging
-	url = git@github.com:viLoqi/messaging.git
 [submodule "payment"]
 	path = payment
 	url = git@github.com:viLoqi/payment.git
-[submodule "ai"]
-	path = ai
-	url = git@github.com:viLoqi/ai.git
-[submodule "activity"]
-	path = activity
-	url = git@github.com:viLoqi/activity.git
