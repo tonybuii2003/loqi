@@ -48,35 +48,35 @@ services:
     depends_on:
       - traefik
         
-  repository:
-    build:
-      context: ./repository
-      dockerfile: Dockerfile.dev
-    volumes:
-      - ./repository:/app
-    labels:
-      - traefik.enable=true
-      - traefik.http.routers.repository.rule=PathPrefix(`/api/repository`)
-      - traefik.http.routers.repository.entrypoints=web
-      # - traefik.http.routers.repository.middlewares=private-api-allowlist
-    # restart: on-failure
-    depends_on:
-      - mongo
+  # repository:
+  #   build:
+  #     context: ./repository
+  #     dockerfile: Dockerfile.dev
+  #   volumes:
+  #     - ./repository:/app
+  #   labels:
+  #     - traefik.enable=true
+  #     - traefik.http.routers.repository.rule=PathPrefix(`/api/repository`)
+  #     - traefik.http.routers.repository.entrypoints=web
+  #     # - traefik.http.routers.repository.middlewares=private-api-allowlist
+  #   # restart: on-failure
+  #   depends_on:
+  #     - mongo
 
-  deck:
-    build:
-      context: ./deck
-      dockerfile: Dockerfile.dev
-    volumes:
-      - ./deck:/app
-    labels:
-      - traefik.enable=true
-      - traefik.http.routers.deck.rule=PathPrefix(`/api/deck`)
-      - traefik.http.routers.deck.entrypoints=web
-      # - "traefik.http.middlewares.localauth.basicauth.users=user:$$2y$$05$$VXLqtj2PQzOPbPlxpuD8lOnHEtJGSr6Gn1aMflWiUbBvlSAf2dSsC"
-      # - traefik.http.routers.deck.middlewares=localauth
-    depends_on:
-      - mongo
+  # deck:
+  #   build:
+  #     context: ./deck
+  #     dockerfile: Dockerfile.dev
+  #   volumes:
+  #     - ./deck:/app
+  #   labels:
+  #     - traefik.enable=true
+  #     - traefik.http.routers.deck.rule=PathPrefix(`/api/deck`)
+  #     - traefik.http.routers.deck.entrypoints=web
+  #     # - "traefik.http.middlewares.localauth.basicauth.users=user:$$2y$$05$$VXLqtj2PQzOPbPlxpuD8lOnHEtJGSr6Gn1aMflWiUbBvlSAf2dSsC"
+  #     # - traefik.http.routers.deck.middlewares=localauth
+  #   depends_on:
+  #     - mongo
 
   payment:
     build:
@@ -130,9 +130,6 @@ services:
       - traefik.http.routers.client.rule=Host(`localhost`)
       - traefik.http.routers.client.entrypoints=web
     # restart: on-failure
-    depends_on:
-      - repository
-      - deck
 
   activity:
     build:
