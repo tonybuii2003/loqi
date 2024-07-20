@@ -34,19 +34,19 @@ services:
     volumes:
       - mongodata:/data/db
 
-  messaging:
-    build: ./messaging
-    labels:
-      - traefik.enable=true
-      - traefik.http.routers.messaging.rule=PathPrefix(`/api/messaging`)
-      - traefik.http.routers.messaging.entrypoints=web
-      - traefik.http.middlewares.messaging-ratelimit.ratelimit.average=100
-      - traefik.http.middlewares.private-api-allowlist.ipallowlist.sourcerange=172.0.0.0/8
-      - traefik.http.routers.messaging.middlewares=messaging-ratelimit
-    volumes:
-      - ./messaging:/app
-    depends_on:
-      - traefik
+  # messaging:
+  #   build: ./messaging
+  #   labels:
+  #     - traefik.enable=true
+  #     - traefik.http.routers.messaging.rule=PathPrefix(`/api/messaging`)
+  #     - traefik.http.routers.messaging.entrypoints=web
+  #     - traefik.http.middlewares.messaging-ratelimit.ratelimit.average=100
+  #     - traefik.http.middlewares.private-api-allowlist.ipallowlist.sourcerange=172.0.0.0/8
+  #     - traefik.http.routers.messaging.middlewares=messaging-ratelimit
+  #   volumes:
+  #     - ./messaging:/app
+  #   depends_on:
+  #     - traefik
         
   # repository:
   #   build:
@@ -102,22 +102,22 @@ services:
       - payment
     network_mode: "host"
 
-  ai:
-    build:
-      context: ./ai
-      dockerfile: Dockerfile.dev
-    volumes:
-      - ./ai:/app
-    labels:
-      - traefik.enable=true
-      - traefik.http.routers.ai.rule=PathPrefix(`/api/ai`)
-      - traefik.http.routers.ai.entrypoints=web
-      - traefik.http.middlewares.ai-ratelimit.ratelimit.average=100
-      - traefik.http.routers.ai.middlewares=ai-ratelimit
-      # - traefik.http.routers.ai.middlewares=private-api-allowlist
-    # restart: on-failure
-    depends_on:
-      - mongo
+  # ai:
+  #   build:
+  #     context: ./ai
+  #     dockerfile: Dockerfile.dev
+  #   volumes:
+  #     - ./ai:/app
+  #   labels:
+  #     - traefik.enable=true
+  #     - traefik.http.routers.ai.rule=PathPrefix(`/api/ai`)
+  #     - traefik.http.routers.ai.entrypoints=web
+  #     - traefik.http.middlewares.ai-ratelimit.ratelimit.average=100
+  #     - traefik.http.routers.ai.middlewares=ai-ratelimit
+  #     # - traefik.http.routers.ai.middlewares=private-api-allowlist
+  #   # restart: on-failure
+  #   depends_on:
+  #     - mongo
 
   client:
     build:
@@ -131,20 +131,20 @@ services:
       - traefik.http.routers.client.entrypoints=web
     # restart: on-failure
 
-  activity:
-    build:
-      context: ./activity
-      dockerfile: Dockerfile.dev
-    volumes:
-      - ./activity:/app
-    labels:
-      - traefik.enable=true
-      - traefik.http.routers.activity.rule=PathPrefix(`/api/activity`)
-      - traefik.http.routers.activity.entrypoints=web
-      # - traefik.http.routers.activity.middlewares=private-api-allowlist
-    # restart: on-failure
-    depends_on:
-      - mongo
+  # activity:
+  #   build:
+  #     context: ./activity
+  #     dockerfile: Dockerfile.dev
+  #   volumes:
+  #     - ./activity:/app
+  #   labels:
+  #     - traefik.enable=true
+  #     - traefik.http.routers.activity.rule=PathPrefix(`/api/activity`)
+  #     - traefik.http.routers.activity.entrypoints=web
+  #     # - traefik.http.routers.activity.middlewares=private-api-allowlist
+  #   # restart: on-failure
+  #   depends_on:
+  #     - mongo
 
 volumes:
   mongodata:
