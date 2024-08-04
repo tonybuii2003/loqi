@@ -9,74 +9,14 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./traefik.toml:/etc/traefik/traefik.toml
-    # restart: on-failure
 
-  whoami:
-    image: traefik/whoami
-    labels:
-      - traefik.enable=true
-      - traefik.http.routers.whoami.rule=PathPrefix(`/whoami`)
-       
   mongo:
     image: mongo:5.0
-    # restart: on-failure
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
-    # deploy:
-    #   resources:
-    #     limits:
-    #       cpus: '3'
-    #       memory: 16384M
-    #     reservations:
-    #       cpus: '3'
-    #       memory: 8192M
     volumes:
       - mongodata:/data/db
-
-  # messaging:
-  #   build: ./messaging
-  #   labels:
-  #     - traefik.enable=true
-  #     - traefik.http.routers.messaging.rule=PathPrefix(`/api/messaging`)
-  #     - traefik.http.routers.messaging.entrypoints=web
-  #     - traefik.http.middlewares.messaging-ratelimit.ratelimit.average=100
-  #     - traefik.http.middlewares.private-api-allowlist.ipallowlist.sourcerange=172.0.0.0/8
-  #     - traefik.http.routers.messaging.middlewares=messaging-ratelimit
-  #   volumes:
-  #     - ./messaging:/app
-  #   depends_on:
-  #     - traefik
-        
-  # repository:
-  #   build:
-  #     context: ./repository
-  #     dockerfile: Dockerfile.dev
-  #   volumes:
-  #     - ./repository:/app
-  #   labels:
-  #     - traefik.enable=true
-  #     - traefik.http.routers.repository.rule=PathPrefix(`/api/repository`)
-  #     - traefik.http.routers.repository.entrypoints=web
-  #     # - traefik.http.routers.repository.middlewares=private-api-allowlist
-  #   # restart: on-failure
-  #   depends_on:
-  #     - mongo
-
-  # deck:
-  #   build:
-  #     context: ./deck
-  #     dockerfile: Dockerfile.dev
-  #   volumes:
-  #     - ./deck:/app
-  #   labels:
-  #     - traefik.enable=true
-  #     - traefik.http.routers.deck.rule=PathPrefix(`/api/deck`)
-  #     - traefik.http.routers.deck.entrypoints=web
-  #     # - "traefik.http.middlewares.localauth.basicauth.users=user:$$2y$$05$$VXLqtj2PQzOPbPlxpuD8lOnHEtJGSr6Gn1aMflWiUbBvlSAf2dSsC"
-  #     # - traefik.http.routers.deck.middlewares=localauth
-  #   depends_on:
-  #     - mongo
 
   payment:
     build:
@@ -88,8 +28,6 @@ services:
       - traefik.enable=true
       - traefik.http.routers.payment.rule=PathPrefix(`/api/payment`)
       - traefik.http.routers.payment.entrypoints=web
-      # - traefik.http.routers.payment.middlewares=private-api-allowlist
-    # restart: on-failure
     depends_on:
       - mongo
 
@@ -102,23 +40,6 @@ services:
       - payment
     network_mode: "host"
 
-  # ai:
-  #   build:
-  #     context: ./ai
-  #     dockerfile: Dockerfile.dev
-  #   volumes:
-  #     - ./ai:/app
-  #   labels:
-  #     - traefik.enable=true
-  #     - traefik.http.routers.ai.rule=PathPrefix(`/api/ai`)
-  #     - traefik.http.routers.ai.entrypoints=web
-  #     - traefik.http.middlewares.ai-ratelimit.ratelimit.average=100
-  #     - traefik.http.routers.ai.middlewares=ai-ratelimit
-  #     # - traefik.http.routers.ai.middlewares=private-api-allowlist
-  #   # restart: on-failure
-  #   depends_on:
-  #     - mongo
-
   client:
     build:
       context: ./neo_client
@@ -129,22 +50,7 @@ services:
       - traefik.enable=true
       - traefik.http.routers.client.rule=Host(`localhost`)
       - traefik.http.routers.client.entrypoints=web
-    # restart: on-failure
 
-  # activity:
-  #   build:
-  #     context: ./activity
-  #     dockerfile: Dockerfile.dev
-  #   volumes:
-  #     - ./activity:/app
-  #   labels:
-  #     - traefik.enable=true
-  #     - traefik.http.routers.activity.rule=PathPrefix(`/api/activity`)
-  #     - traefik.http.routers.activity.entrypoints=web
-  #     # - traefik.http.routers.activity.middlewares=private-api-allowlist
-  #   # restart: on-failure
-  #   depends_on:
-  #     - mongo
 
 volumes:
   mongodata:

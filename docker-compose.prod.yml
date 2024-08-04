@@ -11,9 +11,6 @@ services:
       - ./traefik.toml:/etc/traefik/traefik.toml
     restart: always
     depends_on:
-      # - mongo
-      # - deck
-      # - repository
       - client
 
   mongo:
@@ -25,43 +22,6 @@ services:
     volumes:
       - mongodata:/data/db
 
-  # messaging:
-  #   build: ./messaging
-  #   labels:
-  #     - traefik.enable=true
-  #     - traefik.http.routers.messaging.rule=Host(`loqi.jiechen.dev`) && PathPrefix(`/api/messaging`)
-  #     - traefik.http.routers.messaging.entrypoints=web
-  #     - traefik.http.middlewares.messaging-ratelimit.ratelimit.average=100
-  #     - traefik.http.middlewares.messaging-ratelimit.ratelimit.sourcecriterion.ipstrategy.depth=1
-  #     - traefik.http.routers.messaging.middlewares=messaging-ratelimit
-  #   restart: always
-
-  # repository:
-  #   build:
-  #     context: ./repository
-  #     dockerfile: Dockerfile
-  #   labels:
-  #     - traefik.enable=true
-  #     - traefik.http.routers.repository.rule=Host(`loqi.jiechen.dev`) && PathPrefix(`/api/repository`)
-  #     - traefik.http.routers.repository.entrypoints=web
-  #   restart: always
-    # depends_on:
-    #   - mongo
-
-  # deck:
-  #   build:
-  #     context: ./deck
-  #   labels:
-  #     - traefik.enable=true
-  #     - traefik.http.routers.deck.rule=Host(`loqi.jiechen.dev`) && PathPrefix(`/api/deck`)
-  #     - traefik.http.routers.deck.entrypoints=web
-  #     - traefik.http.middlewares.deck-ratelimit.ratelimit.average=100
-  #     - traefik.http.middlewares.deck-ratelimit.ratelimit.sourcecriterion.ipstrategy.depth=1
-  #     - traefik.http.routers.deck.middlewares=deck-ratelimit
-  #   restart: always
-    # depends_on:
-    #   - mongo
-
   client:
     build:
       context: ./neo_client
@@ -70,24 +30,6 @@ services:
       - traefik.http.routers.client.rule=Host(`loqi.jiechen.dev`)
       - traefik.http.routers.client.entrypoints=web
     restart: always
-    # depends_on:
-    #   - repository
-    #   - deck
-
-  # ai:
-  #   build:
-  #     context: ./ai
-  #   labels:
-  #     - traefik.enable=true
-  #     - traefik.http.routers.ai.rule=Host(`loqi.jiechen.dev`) && PathPrefix(`/api/ai`)
-  #     - traefik.http.routers.ai.entrypoints=web
-  #     - traefik.http.middlewares.ai-ratelimit.ratelimit.average=10
-  #     - traefik.http.middlewares.ai-ratelimit.ratelimit.sourcecriterion.ipstrategy.depth=1
-  #     - traefik.http.routers.messaging.middlewares=ai-ratelimit
-  #     - traefik.http.routers.ai.middlewares=ai-ratelimit
-  #   # restart: on-failure
-  #   depends_on:
-  #     - mongo  
 
   payment:
     build:
@@ -107,12 +49,6 @@ services:
     depends_on:
       - payment
     network_mode: "host"
-    
-  # whoami:
-  #   image: traefik/whoami
-  #   labels:
-  #     - traefik.enable=true
-  #     - traefik.http.routers.whoami.rule=Host(`loqi.jiechen.dev`) && PathPrefix(`/whoami`)
       
 volumes:
   mongodata:
